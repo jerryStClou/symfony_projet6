@@ -1,0 +1,180 @@
+nav
+{
+    background-color: black;
+    height: 9vh;
+}
+
+nav ul
+{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+}
+
+.iconeImage
+{
+    width:9%;
+}
+
+.iconeImage img
+{
+    width: 100%;
+}
+
+nav ul a
+{
+    text-decoration: none;
+    color:white;
+    margin-left:3em;
+    font-size: 21px;
+}
+
+
+nav ul a:hover
+{
+    text-decoration: underline;
+    color:rgb(17, 252, 158);
+}
+
+
+
+
+
+
+/* ----------------------------------Style Presentation ----------------------------- */
+
+
+.presentation
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imagePresentation
+{
+    width:40%;
+}
+
+.imagePresentation img
+{
+    width:100%;
+}
+
+
+
+
+/* ----------------------------------Style Login ----------------------------- */
+
+
+.formLogin
+{
+    border: 2px solid rgba(128, 128, 128, 0.299);
+    border-radius: 6px;
+    background: white;
+    width: 40%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.24);
+}
+
+.formLogin form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+}
+
+
+.loginStyle
+{
+    border: 2px solid rgba(128, 128, 128, 0.299);
+    width: 70%;
+    height: 5vh;
+    margin-bottom: 1.5em;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.24);
+}
+
+.submitLoginStyle
+{
+    width: 15%;
+    height: 4vh;
+    border: 1px solid rgba(162, 120, 211, 0.755);
+    background: rgba(162, 120, 211, 0.755);
+    color: black;
+    border-radius: 5px;
+    font-size: 18px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.24);
+}
+
+
+.submitLoginStyle:hover
+{
+    background: rgb(38, 11, 103);
+    border-color:rgb(38, 11, 103);
+    color:white;
+}
+
+/* ----------------------------------Style Register ----------------------------- */
+
+.formRegister
+{
+    border: 1px solid rgba(128, 128, 128, 0.299);
+    padding: 2rem;
+    border-radius: 7px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.24);
+}
+
+.formRegister form
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formRegister form div
+{
+    width: 30%;
+
+}
+
+.styleRegister
+{
+    border: 2px solid rgb(136, 136, 136);
+    border-radius: 4px;
+    width: 100%;
+    margin: 1em;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.24);
+}
+
+.chekRegisterStyle
+{
+    margin: 0.5em;
+}
+
+.submitRegisterStyle
+{
+   background: rgba(60, 131, 189, 0.573);
+   border: 2px solid rgba(60, 131, 189, 0.573);
+   border-radius: 4px;
+   width: 23%;
+   padding: 10px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.24);
+}
+.submitRegisterStyle:hover
+{
+   background: #061a38;
+   border: 2px solid #061a38;
+   color: white;
+}

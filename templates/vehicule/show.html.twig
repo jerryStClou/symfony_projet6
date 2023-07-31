@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vehicule{% endblock %}
+
+{% block body %}
+    <h1>Vehicule</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vehicule.id }}</td>
+            </tr>
+            <tr>
+                <th>Brand</th>
+                <td>{{ vehicule.brand }}</td>
+            </tr>
+            <tr>
+                <th>Model</th>
+                <td>{{ vehicule.model }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ vehicule.year }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ vehicule.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vehicule_index') }}">back to list</a>
+
+    <a href="{{ path('app_vehicule_edit', {'id': vehicule.id}) }}">edit</a>
+
+    {{ include('vehicule/_delete_form.html.twig') }}
+{% endblock %}
