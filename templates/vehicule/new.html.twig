@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Vehicule{% endblock %}
+{% block title %}New Vehicule
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Vehicule</h1>
+	<br><br><br>
+	<center>
+		<div class="formCRUD">
+			<h1>Create new Vehicule</h1>
 
-    {{ include('vehicule/_form.html.twig') }}
+			{{ include('vehicule/_form.html.twig') }}
 
-    <a href="{{ path('app_vehicule_index') }}">back to list</a>
+			<a href="{{ path('app_vehicule_index') }}" class="submitCRUDStyle">back to list</a>
+		</div>
+	</center>
 {% endblock %}

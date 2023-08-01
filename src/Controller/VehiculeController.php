@@ -22,7 +22,7 @@ class VehiculeController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
+    #[Route('/vehicule/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $vehicule = new Vehicule();
@@ -71,7 +71,7 @@ class VehiculeController extends AbstractController
     #[Route('/{id}', name: 'app_vehicule_delete', methods: ['POST'])]
     public function delete(Request $request, Vehicule $vehicule, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$vehicule->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $vehicule->getId(), $request->request->get('_token'))) {
             $entityManager->remove($vehicule);
             $entityManager->flush();
         }

@@ -1,41 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vehicule index{% endblock %}
+{% block title %}Vehicule index
+{% endblock %}
 
 {% block body %}
-    <h1>Vehicule index</h1>
+	<h1>Vehicule index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Price</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for vehicule in vehicules %}
-            <tr>
-                <td>{{ vehicule.id }}</td>
-                <td>{{ vehicule.brand }}</td>
-                <td>{{ vehicule.model }}</td>
-                <td>{{ vehicule.year }}</td>
-                <td>{{ vehicule.price }}</td>
-                <td>
-                    <a href="{{ path('app_vehicule_show', {'id': vehicule.id}) }}">show</a>
-                    <a href="{{ path('app_vehicule_edit', {'id': vehicule.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Brand</th>
+				<th>Model</th>
+				<th>Year</th>
+				<th>Price</th>
+				<th>Category</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for vehicule in vehicules %}
+				<tr>
+					<td>{{ vehicule.id }}</td>
+					<td>{{ vehicule.brand }}</td>
+					<td>{{ vehicule.model }}</td>
+					<td>{{ vehicule.year }}</td>
+					<td>{{ vehicule.price }}</td>
+					{% if vehicule.category %}
+						<td>{{vehicule.category.name}}</td>
 
-    <a href="{{ path('app_vehicule_new') }}">Create new</a>
+					{% else %}
+						<td>none</td>
+					{% endif %}
+
+					<td>
+						<a href="{{ path('app_vehicule_show', {'id': vehicule.id}) }}" class="styleShow">show</a>
+
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('app_vehicule_edit', {'id': vehicule.id}) }}" class="styleEdit">edit</a>
+						{% endif %}
+
+						<a href="{{ path('app_panier_add', {'id': vehicule.id}) }}" class="submitCRUDStyle">Ajouter aux panier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('app_vehicule_new') }}" class="styleCreate">Create new</a>
+	{% endif %}
 {% endblock %}

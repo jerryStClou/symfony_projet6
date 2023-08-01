@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanierController!
+{% endblock %}
+
+{% block body %}
+	{% if vehicule %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Brand</th>
+					<th>Model</th>
+					<th>Year</th>
+					<th>Price</th>
+					<th>Category</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ vehicule.brand }}</td>
+					<td>{{ vehicule.model }}</td>
+					<td>{{ vehicule.year }}</td>
+					<td>{{ vehicule.price }}</td>
+					<td>{{vehicule.category.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	{% endif %}<br><br>
+	<a href="{{path('app_panier_flush')}}" class="deleteCRUDStyle">Vider le panier</a>
+{% endblock %}

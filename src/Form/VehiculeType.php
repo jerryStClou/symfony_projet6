@@ -14,14 +14,14 @@ class VehiculeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('brand')
-            ->add('model')
-            ->add('year')
-            ->add('price')
+            ->add('brand', null, ['attr' => ['class' => 'styleCRUD']])
+            ->add('model', null, ['attr' => ['class' => 'styleCRUD']])
+            ->add('year', null, ['attr' => ['class' => 'styleCRUD']])
+            ->add('price', null, ['attr' => ['class' => 'styleCRUD']])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'name'
-
+                'choice_label' => 'name',
+                'attr' => ['class' => 'styleCRUD']
             ]);
     }
 
