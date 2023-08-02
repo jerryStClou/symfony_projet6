@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VehiculeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
@@ -28,8 +30,15 @@ class Vehicule
     #[ORM\ManyToOne(inversedBy: 'vehicules')]
     private ?Category $category = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+    #[ORM\OneToMany(mappedBy: 'vehicule', targetEntity: Photo::class)]
+    private Collection $photo;
+
+    public function __construct()
+    {
+        $this->photo = new ArrayCollection();
+    }
+
+
 
 
 
@@ -99,14 +108,32 @@ class Vehicule
         return $this;
     }
 
-    public function getImage(): ?string
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhoto(): Collection
     {
-        return $this->image;
+        return $this->photo;
     }
 
-    public function setImage(?string $image): static
+    public function addPhoto(Photo $photo): static
     {
-        $this->image = $image;
+        if (!$this->photo->contains($photo)) {
+            $this->photo->add($photo);
+            $photo->setVehicule($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): static
+    {
+        if ($this->photo->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getVehicule() === $this) {
+                $photo->setVehicule(null);
+            }
+        }
 
         return $this;
     }
