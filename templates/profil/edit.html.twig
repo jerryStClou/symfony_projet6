@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfilController!
+{% endblock %}
+
+{% block body %}
+	<br><br><br>
+	<center>
+		<div class="formCRUD">
+			<h1>Edit profile</h1>
+			{{form_start(form)}}
+			<span class='m-1'>{{form_row(form.email)}}</span>
+			<button class="submitCRUDStyle">{{button_label|default('Send')}}</button>
+			{{form_end(form)}}
+			<br>
+			<a href="{{ path('app_profil') }}" class="styleEdit">back to profil</a>
+			<br>
+		</div>
+	</center>
+{% endblock %}

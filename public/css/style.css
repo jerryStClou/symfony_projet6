@@ -332,3 +332,45 @@ nav ul a:hover
    border: 2px solid rgba(106, 8, 6, 0.484);
    color: white;
 }
+
+
+
+/* ----------------------------------Style Filter ----------------------------- */
+
+.filter
+{
+    width: 50%;
+}
+
+.filter form
+{
+    display: flex;
+    /* border: 2px solid red; */
+}
+
+.filter form select
+{
+    width: 60%;
+}
+
+.filter form button
+{
+    width: 10%;
+    font-size: 1.2em;
+    margin-left: 2em;
+    background: rgba(150, 150, 150, 0.574);
+   border: 2px solid rgba(150, 150, 150, 0.574);
+   border-radius: 4px;
+   color: white;
+   
+   padding: 10px;
+   text-decoration: none;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.24);
+}
+
+.filter form button:hover
+{
+   background: rgba(73, 73, 73, 0.574);
+   border: 2px solid rgba(73, 73, 73, 0.574);
+   color: white;
+}

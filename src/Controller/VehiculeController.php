@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Photo;
 use App\Entity\Vehicule;
 use App\Form\VehiculeType;
+use App\Repository\CategoryRepository;
 use App\Repository\VehiculeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/vehicule')]
 class VehiculeController extends AbstractController
 {
-    #[Route('/', name: 'app_vehicule_index', methods: ['GET'])]
-    public function index(VehiculeRepository $vehiculeRepository): Response
+    #[Route('/', name: 'app_vehicule_index', methods: ['GET', 'POST'])]
+    public function index(VehiculeRepository $vehiculeRepository, CategoryRepository $categoryRepository, Request $request): Response
     {
+        if ($request->isMethod('POST')) {
+            return $this->render('vehicule/index.html.twig', [
+                'vehicules' => $vehiculeRepository->findBy(['category' => $request->request->get('id')]),
+                'categories' =>  $categoryRepository->findAll()
+            ]);
+        }
+
         return $this->render('vehicule/index.html.twig', [
             'vehicules' => $vehiculeRepository->findAll(),
+            'categories' =>  $categoryRepository->findAll()
         ]);
     }
 

@@ -52,6 +52,9 @@
 
 		{% if is_granted('ROLE_USER') %}
 			<li>
+				<a href="{{path('app_profil')}}">Profil</a>
+			</li>
+			<li>
 				<a href="{{path('app_logout')}}">Logout</a>
 			</li>
 		{% else %}
@@ -62,7 +65,9 @@
 				<a href="{{path('app_register')}}">Register</a>
 			</li>
 		{% endif %}
-
+		<li>
+			<a href="{{path('app_contact')}}">Contact</a>
+		</li>
 
 	</ul>
 </nav>

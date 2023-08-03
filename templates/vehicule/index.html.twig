@@ -5,6 +5,19 @@
 
 {% block body %}
 	<h1>Vehicule index</h1>
+	<br><br>
+	<div class="filter">
+		<form method='POST'>
+			<select name="id" class="form-select form-select-lg mb-3" aria-label="Large select example">
+				{% for category in categories %}
+					<option value="{{category.id}}">{{category.name}}</option>
+				{% endfor %}
+			</select>
+			<button type='submit'>Filter</button>
+		</form>
+	</div>
+
+	<br><br>
 
 	<table class="table">
 		<thead>
