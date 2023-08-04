@@ -13,10 +13,14 @@ class PanierController extends AbstractController
     #[Route('/panier', name: 'app_panier')]
     public function index(SessionInterface $session, VehiculeRepository $vehiculeRepository): Response
     {
-
+        if ($session->get('panier') !== null) {
+            $vehicule = $vehiculeRepository->find($session->get('panier'));
+        } else {
+            $vehicule = null;
+        }
 
         return $this->render('panier/index.html.twig', [
-            'vehicule' => $vehiculeRepository->find($session->get('panier')),
+            'vehicule' => $vehicule,
         ]);
     }
 
@@ -32,7 +36,7 @@ class PanierController extends AbstractController
     #[Route('/panier/flush', name: 'app_panier_flush')]
     public function flush(SessionInterface $session, VehiculeRepository $vehiculeRepository): Response
     {
-        $session->set('panier', '');
+        $session->set('panier', null);
         return $this->redirectToRoute('app_panier');
     }
 }

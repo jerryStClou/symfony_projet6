@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!
+{% endblock %}
+
+{% block body %}
+
+	<br><br><br>
+	<center>
+		<div class="formCRUD">
+			<h1>Reservation</h1>
+			{{form_start(form)}}
+			<span class='m-1'>{{form_row(form.adress)}}</span>
+			<span class='m-1'>{{form_row(form.postalCode)}}</span>
+			<span class='m-1'>{{form_row(form.city)}}</span>
+			<span class='m-1'>{{form_row(form.startDate)}}</span>
+			<span class='m-1'>{{form_row(form.endDate)}}</span>
+			<button class="submitCRUDStyle">{{button_label|default('Send')}}</button>
+			{{form_end(form)}}
+		</div>
+	</center>
+{% endblock %}

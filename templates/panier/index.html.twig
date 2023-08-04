@@ -28,4 +28,8 @@
 
 	{% endif %}<br><br>
 	<a href="{{path('app_panier_flush')}}" class="deleteCRUDStyle">Vider le panier</a>
+
+	{% if app.user %}
+		<a class='btn btn-warning ' href="{{path('app_reservation')}}">reserver</a>
+	{% endif %}
 {% endblock %}
