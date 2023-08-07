@@ -2,19 +2,24 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
+use App\Entity\Order;
+use DateTimeImmutable;
 use Stripe\StripeClient;
 use App\Form\ReservationType;
 use App\Repository\UserRepository;
 use App\Repository\VehiculeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ReservationController extends AbstractController
 {
@@ -26,6 +31,9 @@ class ReservationController extends AbstractController
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
+        }
+        if ($session->get('panier') == null) {
+            return $this->redirectToRoute('app_vehicule_index');
         }
         $user = $userRepository->find($this->getUser());
 
@@ -46,6 +54,10 @@ class ReservationController extends AbstractController
             $endDate = $form->get('endDate')->getData();
             $interval = date_diff($startDate, $endDate);
             $days = $interval->days + 1;
+            if ($days > 30) {
+                $this->addFlash('warning', 'you cannot exceed 30 days');
+                return $this->redirectToRoute('app_reservation');
+            }
             $vehicule = $vehiculeRepository->find($session->get('panier'));
             $total = $vehicule->getPrice() * $days;
             ///////////////////creation d'un tableau//////////////////////
@@ -62,6 +74,7 @@ class ReservationController extends AbstractController
         }
         return $this->render('reservation/index.html.twig', [
             'form' => $form,
+            'vehicule' => $vehiculeRepository->find($session->get('panier'))
         ]);
     }
 
@@ -74,6 +87,7 @@ class ReservationController extends AbstractController
         $stripe = new StripeClient($stripeKey);
 
         $checkout_session = $stripe->checkout->sessions->create([
+            'customer_email' => $this->getUser()->getEmail(),
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'eur',
@@ -93,9 +107,36 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/success', name: 'app_success')]
-    public function appSuccess()
+    public function appSuccess(VehiculeRepository $vehiculeRepository, SessionInterface $session, EntityManagerInterface $entityManager, MailerInterface $mailer)
     {
-        return $this->render('reservation/success.html.twig');
+        $order = new Order();
+        $reservation = $session->get('reservation');
+        $uniqId = uniqid();
+        $order->setUser($this->getUser())
+            ->setVehicule($vehiculeRepository->find($session->get('panier')))
+            ->setCreateAt(new DateTimeImmutable())
+            ->setTotal($session->get('reservation')['total'])
+            ->setStartDate(date_format($reservation['startDate'], 'Y-m-d'))
+            ->setEndDate(date_format($reservation['endDate'], 'Y-m-d'))
+            ->setOrderId($uniqId);
+
+        $entityManager->persist($order);
+        $entityManager->flush();
+        $session->set('panier', null);
+        $session->set('reservation', null);
+
+        // envoie d'email
+        $email = (new TemplatedEmail())
+            ->from('info@voiture-location.com')
+            ->to($this->getUser()->getEmail())
+            ->subject('Order n. ' . $uniqId)
+            ->text('Thanks for your order');
+
+        $mailer->send($email);
+
+        return $this->render('reservation/success.html.twig', [
+            'uniqId' => $uniqId
+        ]);
     }
 
 
